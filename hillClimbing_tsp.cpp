@@ -53,11 +53,12 @@ bool openFileSuccess(ifstream& fin) {
 void buildData(ifstream& fin, vector<city>& road, double dis[NUM][NUM]) {
 	//建立城市資訊，及彼此距離
 	int index, x, y;
+	//建立城市座標
 	while (fin >> index >> x >> y) {
 		city tmp = city(index, x, y);
 		road.push_back(tmp);
 	}
-	
+	//計算兩城市距離
 	for (int i = 0; i < NUM; ++i) {
 		for (int j = 0; j < NUM; ++j) {
 			if (i == j) dis[i][j] = 0;
@@ -69,9 +70,9 @@ void buildData(ifstream& fin, vector<city>& road, double dis[NUM][NUM]) {
 }
 //hillClimbing演算法
 void hillClimbing(vector<city>& road, double dis[NUM][NUM]) {
-	int cnt = 0;
-	double minDis = DBL_MAX;
-	srand(time(NULL));
+	int cnt = 0;					//多久沒找到更好的解
+	double minDis = DBL_MAX;		//目前最短距離
+	srand(time(NULL));				//交換隨機兩城市所需要的seed
 	
 	cout << "Hill Climbing..." << endl;
 	while (cnt < 1000000) {						//若搜尋了1000000仍沒找到更好的答案就當目前為最佳解
@@ -103,9 +104,9 @@ double travel(vector<city>& road, double dis[NUM][NUM]) {
 }
 //輸出
 void output(vector<city>& road) {
-	for (int i = 0; i < NUM; ++i) {
-		cout << road[i].index;
-		if (i != NUM-1) cout << "->";
+	for (int i = 0; i <= NUM; ++i) {
+		cout << road[i%NUM].index;
+		if (i != NUM) cout << "->";
 	}
 	cout << endl;
 }
